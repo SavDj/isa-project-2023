@@ -1,4 +1,4 @@
-package java.isabackend;
+package project.isabackend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
