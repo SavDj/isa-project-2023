@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "\"users\"")
+@Table(name = "\"Users\"")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class User {
     @Id
@@ -33,24 +33,22 @@ public class User {
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role_jt",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private Set<Role> roles = new HashSet<Role>();
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id", referencedColumnName = "id")
+    private Role role;
 
     public User() {
 
     }
 
-    public User(long id, String email, String password, String firstName, String lastName, String phoneNumber, Set<Role> roles) {
+    public User(long id, String email, String password, String firstName, String lastName, String phoneNumber, Role role) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
-        this.roles = roles;
+        this.role = role;
     }
 
     public long getId() {
@@ -101,11 +99,11 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(Set<Role> role) {
-        this.roles = role;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

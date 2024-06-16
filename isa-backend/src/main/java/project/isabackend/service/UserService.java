@@ -48,8 +48,8 @@ public class UserService {
         user.setCountry(userRequest.getCountry());
         user.setOccupation(userRequest.getOccupation());
 
-        Set<Role> roles = roleService.findByName("REGISTERED_USER");
-        user.setRoles(roles);
+        Role role = roleService.findByName("REGISTERED_USER");
+        user.setRole(role);
 
         return this.userRepository.save(user);
     }

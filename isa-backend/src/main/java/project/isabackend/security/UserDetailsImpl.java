@@ -8,6 +8,7 @@ import project.isabackend.model.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class UserDetailsImpl implements UserDetails {
@@ -15,27 +16,21 @@ public class UserDetailsImpl implements UserDetails {
     private long id;
     private String email;
     private String password;
-    private Collection<? extends GrantedAuthority> authorities;
+    private Role role;
 
     public UserDetailsImpl(long id, String email, String password,
-                           Collection<? extends GrantedAuthority> authorities) {
+                           Role role) {
         this.id = id;
         this.email = email;
         this.password = password;
-        this.authorities = authorities;
+        this.role = role;
     }
     public static UserDetailsImpl getUserDetailsFromUser(User user) {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        GrantedAuthority grantedAuthority;
-        for(Role role : user.getRoles()) {
-            grantedAuthority = new SimpleGrantedAuthority("ROLE_" + role.getName());
-            authorities.add(grantedAuthority);
-        }
-        return new UserDetailsImpl(user.getId(), user.getEmail(), user.getPassword(), authorities);
+        return new UserDetailsImpl(user.getId(), user.getEmail(), user.getPassword(), user.getRole());
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        return Collections.singletonList(new SimpleGrantedAuthority(this.role.getAuthority()));
     }
     public long getId() {
         return id;
@@ -49,7 +44,15 @@ public class UserDetailsImpl implements UserDetails {
     }
     @Override
     public String getUsername() {
-        return username;
+        return email;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override

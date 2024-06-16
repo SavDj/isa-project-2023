@@ -11,11 +11,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import project.isabackend.dto.UserInfoDTO;
 import project.isabackend.dto.UserLoginDTO;
 import project.isabackend.dto.UserRegistrationDTO;
 import project.isabackend.model.RegisteredUser;
@@ -47,7 +45,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/log-in")
+    @PostMapping("/login")
     public ResponseEntity<?> logIn(@Valid @RequestBody UserLoginDTO dto) {
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword()));
@@ -59,10 +57,25 @@ public class UserController {
                 .body("Logged in successfully");
     }
 
-    @PostMapping("/log-out")
+    @PostMapping("/logout")
     public ResponseEntity<?> logOut() {
         ResponseCookie cookie = tokenUtil.getCleanCookie();
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
-                .body("Signed out successfully.");
+                .body("Logged out successfully.");
+    }
+
+    @GetMapping("/user-info")
+    public ResponseEntity<?> getUserInfo() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+        UserInfoDTO userInfo = new UserInfoDTO();
+        BeanUtils.copyProperties(userDetails, userInfo);
+
+        if (userDetails.getRole() != null) {
+            userInfo.setRole(userDetails.getRole().getName());
+        }
+
+        return ResponseEntity.ok(userInfo);
     }
 }

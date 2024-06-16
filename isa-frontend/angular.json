@@ -5,7 +5,17 @@
   "projects": {
     "isa-frontend": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "standalone": false
+        },
+        "@schematics/angular:directive": {
+          "standalone": false
+        },
+        "@schematics/angular:pipe": {
+          "standalone": false
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -57,10 +67,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "isa-frontend:build:production"
+              "browserTarget": "isa-frontend:build:production"
             },
             "development": {
-              "buildTarget": "isa-frontend:build:development"
+              "browserTarget": "isa-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -68,7 +78,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "isa-frontend:build"
+            "browserTarget": "isa-frontend:build"
           }
         },
         "test": {
