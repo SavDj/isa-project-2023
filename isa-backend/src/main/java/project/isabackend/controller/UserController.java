@@ -53,15 +53,13 @@ public class UserController {
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         ResponseCookie cookie = tokenUtil.getCookie(userDetails);
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
-                .body("Logged in successfully");
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).build();
     }
 
     @PostMapping("/logout")
     public ResponseEntity<?> logOut() {
         ResponseCookie cookie = tokenUtil.getCleanCookie();
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
-                .body("Logged out successfully.");
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).build();
     }
 
     @GetMapping("/user-info")

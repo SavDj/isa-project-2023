@@ -2,6 +2,7 @@ package project.isabackend.util;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +11,8 @@ import org.springframework.web.util.WebUtils;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+
+import javax.crypto.SecretKey;
 import java.util.Date;
 
 @Component
@@ -17,13 +20,10 @@ public class TokenUtil {
     @Value("isa-app")
     private String APP_NAME;
 
-    @Value("isaSecret")
-    private String SECRET;
+    private SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     @Value("1800000")
     private int EXPIRES_IN;
-    @Value("Authorization")
-    private String AUTH_HEADER;
 
     private static final String AUDIENCE_WEB = "web";
 
@@ -51,11 +51,11 @@ public class TokenUtil {
     }
 
     public String getUsername(String token) {
-        return Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody().getSubject();
+        return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getSubject();
     }
 
     public Date getExpirationDate(String token) {
-        return Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody().getExpiration();
+        return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getExpiration();
     }
 
     public String generateToken(String username) {
@@ -65,7 +65,7 @@ public class TokenUtil {
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + EXPIRES_IN))
-                .signWith(SignatureAlgorithm.HS512, SECRET)
+                .signWith(SignatureAlgorithm.HS256, key)
                 .compact();
     }
 }
