@@ -36,7 +36,7 @@ public class SecurityConfiguration {
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers(SWAGGER_PATHS).permitAll()
                         .anyRequest().authenticated()
                 )
@@ -61,7 +61,7 @@ public class SecurityConfiguration {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
                 .requestMatchers(HttpMethod.GET, SWAGGER_PATHS)
-                .requestMatchers(HttpMethod.POST, "/auth/login")
+                .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/register")
                 .requestMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "favicon.ico",
                         "/*.css", "/*.js");
     }

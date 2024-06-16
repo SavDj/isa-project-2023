@@ -14,8 +14,8 @@ public class SystemAdministrator extends User{
     public SystemAdministrator() {
     }
 
-    public SystemAdministrator(long id, String email, String password, String firstName, String lastName, String phoneNumber, Set<Role> roles, Set<ComplaintResponse> complaintResponses) {
-        super(id, email, password, firstName, lastName, phoneNumber, roles);
+    public SystemAdministrator(long id, String email, String password, String firstName, String lastName, String phoneNumber, Role role, Set<ComplaintResponse> complaintResponses) {
+        super(id, email, password, firstName, lastName, phoneNumber, role);
         this.complaintResponses = complaintResponses;
     }
 

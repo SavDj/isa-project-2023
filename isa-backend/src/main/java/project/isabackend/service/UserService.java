@@ -8,9 +8,11 @@ import project.isabackend.dto.UserRegistrationDTO;
 import project.isabackend.model.RegisteredUser;
 import project.isabackend.model.Role;
 import project.isabackend.model.User;
+import project.isabackend.model.UserCategory;
 import project.isabackend.repository.RegisteredUserRepository;
 import project.isabackend.repository.UserRepository;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Service
@@ -47,6 +49,8 @@ public class UserService {
         user.setCity(userRequest.getCity());
         user.setCountry(userRequest.getCountry());
         user.setOccupation(userRequest.getOccupation());
+        user.setCategory(UserCategory.REGULAR);
+        user.setPenalties(0);
 
         Role role = roleService.findByName("REGISTERED_USER");
         user.setRole(role);

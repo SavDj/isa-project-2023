@@ -44,8 +44,8 @@ public class RegisteredUser extends User{
         this.hospitalInformation = hospitalInformation;
     }
 
-    public RegisteredUser(long id, String email, String password, String firstName, String lastName, String phoneNumber, Set<Role> roles, int points, int penalties, UserCategory category, String country, String city, String occupation, String hospitalInformation) {
-        super(id, email, password, firstName, lastName, phoneNumber, roles);
+    public RegisteredUser(long id, String email, String password, String firstName, String lastName, String phoneNumber, Role role, int points, int penalties, UserCategory category, String country, String city, String occupation, String hospitalInformation) {
+        super(id, email, password, firstName, lastName, phoneNumber, role);
         this.points = points;
         this.penalties = penalties;
         this.category = category;
@@ -109,5 +109,13 @@ public class RegisteredUser extends User{
 
     public void setHospitalInformation(String hospitalInformation) {
         this.hospitalInformation = hospitalInformation;
+    }
+
+    public Set<Complaint> getComplaints() {
+        return complaints;
+    }
+
+    public void setComplaints(Set<Complaint> complaints) {
+        this.complaints = complaints;
     }
 }

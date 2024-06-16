@@ -20,8 +20,8 @@ public class CompanyAdministrator extends User{
     public CompanyAdministrator() {
     }
 
-    public CompanyAdministrator(long id, String email, String password, String firstName, String lastName, String phoneNumber, Set<Role> roles, Company company, Set<Appointment> appointments, Set<Complaint> complaints) {
-        super(id, email, password, firstName, lastName, phoneNumber, roles);
+    public CompanyAdministrator(long id, String email, String password, String firstName, String lastName, String phoneNumber, Role role, Company company, Set<Appointment> appointments, Set<Complaint> complaints) {
+        super(id, email, password, firstName, lastName, phoneNumber, role);
         this.company = company;
         this.appointments = appointments;
         this.complaints = complaints;

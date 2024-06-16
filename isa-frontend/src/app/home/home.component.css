@@ -1,0 +1,39 @@
+
+p {
+    font-size: 25px;
+}
+
+table {
+    border-collapse: collapse;
+    font-size: 1.1em;
+    font-family: 'Times New Roman', Times, serif;
+    min-width: 300px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+thead tr {
+    background-color: rgb(44, 183, 243);
+    color: #ffffff;
+    text-align: center;
+}
+
+th, td {
+    padding: 14px 17px;
+}
+
+tbody tr {
+    border-bottom: 1px solid #000000;
+}
+
+tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+tbody tr:last-of-type {
+    border-bottom: 2px solid rgb(44, 183, 243);
+}
+
+tbody tr.active-row {
+    font-weight: bold;
+    color: rgb(44, 183, 243);
+}
